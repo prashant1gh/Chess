@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .menu {
+            display: none;
+            margin: 0 auto;
+            border: 1px solid black;
+            width: 100%;
+        }
+        
+        .gameOverScreen {
+            display: none;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid black;
+            /* width: 50%; */
+        }
+        
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+
+            <div class="menu">
+                <h2>Game Menu</h2>
+                choose level
+                <ul>
+                    <li>
+                        human vs human
+                    </li>
+
+                    <li>
+                        human vs CPU
+                    </li>
+
+                    <li>
+                        human vs AI
+                    </li>
+                </ul>
+
+
+                choose side
+                <ul>
+                    <li>
+                        white
+                    </li>
+
+                    <li>
+                        black
+                    </li>
+
+
+                </ul>
+            </div>
+
+
+            <div class="gameScreen">
+                <img src="./images/board.png" alt="" height="400px" width="400px">
+            </div>
+
+            <div class="gameOverScreen">
+                <h2>Gameover</h2>
+                <ul>
+                    <li>Play Again</li>
+                    <li>Go to menu</li>
+                </ul>
+            </div>
+
+        </div>
+    </main>
+    <script src="./js/script.js"></script>
+    <script src="./js/game.js"></script>
+</body>
+
+</html>
