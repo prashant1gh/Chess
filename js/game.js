@@ -1,16 +1,20 @@
-var INITIAL = 1;
-var GAME_PLAYING = 2;
-var GAME_OVER = 3;
-
-
 function ChessGame() {
     var game = this;
 
     game.currentState = INITIAL;
     // game.currentState = GAME_PLAYING;
     // game.currentState = GAME_OVER;
+
+    game.bindEvents();
 }
 
+ChessGame.prototype.start = function() {
+    var game = this;
+
+    window.requestAnimationFrame(function() {
+        game.runGameLoop();
+    });
+}
 
 ChessGame.prototype.runGameLoop = function() {
     var game = this;
@@ -31,14 +35,49 @@ ChessGame.prototype.runGameLoop = function() {
             game.drawGameOverScreen();
             break;
     }
+
+    window.requestAnimationFrame(function() {
+        game.runGameLoop();
+    });
+}
+
+ChessGame.prototype.bindEvents = function() {
+    var game = this;
+
+    play_game_btn.addEventListener('click', function() {
+        game.currentState = GAME_PLAYING;
+    })
+
+    resign_game_btn.addEventListener('click', function() {
+        game.currentState = GAME_OVER;
+    })
+
+    play_again_btn.addEventListener('click', function() {
+        game.currentState = GAME_PLAYING;
+    })
+
+    menu_btn.addEventListener('click', function() {
+        game.currentState = INITIAL;
+    })
+}
+
+ChessGame.prototype.drawInitialScreen = function() {
+    var game = this;
+    game.showContent();
+}
+
+ChessGame.prototype.drawGamePlayingScreen = function() {
+    var game = this;
+    game.showContent();
+}
+
+ChessGame.prototype.drawGameOverScreen = function() {
+    var game = this;
+    game.showContent();
 }
 
 ChessGame.prototype.showContent = function() {
     var game = this;
-
-    var menu = document.querySelector('.menu');
-    var gameScreen = document.querySelector('.gameScreen');
-    var gameOverScreen = document.querySelector('.gameOverScreen');
 
     menu.style.display = 'none';
     gameScreen.style.display = 'none';
@@ -47,7 +86,6 @@ ChessGame.prototype.showContent = function() {
     switch (game.currentState) {
         case INITIAL:
             menu.style.display = 'block';
-
             break;
         case GAME_PLAYING:
             gameScreen.style.display = 'block';
@@ -57,27 +95,4 @@ ChessGame.prototype.showContent = function() {
             gameOverScreen.style.display = 'block';
             break;
     }
-}
-
-
-
-ChessGame.prototype.drawInitialScreen = function() {
-    var game = this;
-    game.showContent();
-
-}
-
-ChessGame.prototype.drawGamePlayingScreen = function() {
-    var game = this;
-
-    game.showContent();
-
-}
-
-ChessGame.prototype.drawGameOverScreen = function() {
-    var game = this;
-
-    game.showContent();
-
-
 }
