@@ -1,6 +1,6 @@
 window.onload = function() {
 
-    var chessGame = new ChessGame();
+    let chessGame = new ChessGame();
     chessGame.start();
 
 };

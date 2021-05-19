@@ -1,17 +1,17 @@
-var INITIAL = 1;
-var GAME_OVER = 3;
-var GAME_PLAYING = 2;
+const INITIAL = 1;
+const GAME_OVER = 3;
+const GAME_PLAYING = 2;
 
 
 
 
 
-const menu_btn = document.querySelector('#menu');
-const play_game_btn = document.querySelector('#play_game');
-const play_again_btn = document.querySelector('#play_again');
-const resign_game_btn = document.querySelector('#resign_game');
+const MENU_BTN = document.querySelector('#menu');
+const PLAY_GAME_BTN = document.querySelector('#play_game');
+const PLAY_AGAIN_BTN = document.querySelector('#play_again');
+const RESIGN_GAME_BTN = document.querySelector('#resign_game');
 
 
-const menu = document.querySelector('.menu');
-const gameScreen = document.querySelector('.gameScreen');
-const gameOverScreen = document.querySelector('.gameOverScreen');
+const MENU = document.querySelector('.menu');
+const GAME_SCREEN = document.querySelector('.gameScreen');
+const GAME_OVER_SCREEN = document.querySelector('.gameOverScreen');

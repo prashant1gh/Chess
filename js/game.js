@@ -1,98 +1,117 @@
-function ChessGame() {
-    var game = this;
+class ChessGame {
+    "use strict"
 
-    game.currentState = INITIAL;
-    // game.currentState = GAME_PLAYING;
-    // game.currentState = GAME_OVER;
+    constructor() {
 
-    game.bindEvents();
-}
-
-ChessGame.prototype.start = function() {
-    var game = this;
-
-    window.requestAnimationFrame(function() {
-        game.runGameLoop();
-    });
-}
-
-ChessGame.prototype.runGameLoop = function() {
-    var game = this;
-
-
-    //game state
-
-    switch (game.currentState) {
-        case INITIAL:
-            game.drawInitialScreen();
-
-            break;
-        case GAME_PLAYING:
-            game.drawGamePlayingScreen();
-
-            break;
-        case GAME_OVER:
-            game.drawGameOverScreen();
-            break;
+        this.currentState = INITIAL;
+        // this.currentState = GAME_PLAYING;
+        // this.currentState = GAME_OVER;
     }
 
-    window.requestAnimationFrame(function() {
-        game.runGameLoop();
-    });
-}
+    /**
+     * start method is the initial starting point of this application.
+     * It calls runGameLoop method to start game loop, 
+     * also it invokes bindEvents method for event binding.
+     */
+    start() {
+        window.requestAnimationFrame(() => {
+            this.runGameLoop();
+        });
 
-ChessGame.prototype.bindEvents = function() {
-    var game = this;
+        this.bindEvents()
 
-    play_game_btn.addEventListener('click', function() {
-        game.currentState = GAME_PLAYING;
-    })
+    }
 
-    resign_game_btn.addEventListener('click', function() {
-        game.currentState = GAME_OVER;
-    })
+    /**
+     * This method runs various state of application in a loop.
+     * 
+     */
+    runGameLoop() {
+        //game state
+        switch (this.currentState) {
 
-    play_again_btn.addEventListener('click', function() {
-        game.currentState = GAME_PLAYING;
-    })
+            case INITIAL:
+                this.drawInitialScreen();
+                break;
 
-    menu_btn.addEventListener('click', function() {
-        game.currentState = INITIAL;
-    })
-}
+            case GAME_PLAYING:
+                this.drawGamePlayingScreen();
+                break;
 
-ChessGame.prototype.drawInitialScreen = function() {
-    var game = this;
-    game.showContent();
-}
+            case GAME_OVER:
+                this.drawGameOverScreen();
+                break;
+        }
 
-ChessGame.prototype.drawGamePlayingScreen = function() {
-    var game = this;
-    game.showContent();
-}
+        window.requestAnimationFrame(() => {
+            this.runGameLoop();
+        });
+    }
 
-ChessGame.prototype.drawGameOverScreen = function() {
-    var game = this;
-    game.showContent();
-}
 
-ChessGame.prototype.showContent = function() {
-    var game = this;
+    /**
+     * this method binds all the necessary events in the application.
+     */
+    bindEvents() {
+        PLAY_GAME_BTN.addEventListener('click', () => {
+            this.currentState = GAME_PLAYING;
+        })
 
-    menu.style.display = 'none';
-    gameScreen.style.display = 'none';
-    gameOverScreen.style.display = 'none';
+        RESIGN_GAME_BTN.addEventListener('click', () => {
+            this.currentState = GAME_OVER;
+        })
 
-    switch (game.currentState) {
-        case INITIAL:
-            menu.style.display = 'block';
-            break;
-        case GAME_PLAYING:
-            gameScreen.style.display = 'block';
+        PLAY_AGAIN_BTN.addEventListener('click', () => {
+            this.currentState = GAME_PLAYING;
+        })
 
-            break;
-        case GAME_OVER:
-            gameOverScreen.style.display = 'block';
-            break;
+        MENU_BTN.addEventListener('click', () => {
+            this.currentState = INITIAL;
+        })
+    }
+
+    /**
+     * this method shows the menu of the application.
+     */
+    drawInitialScreen() {
+        this.showContent();
+    }
+
+    /**
+     * this method shows actual chess game in the application.
+     */
+    drawGamePlayingScreen() {
+        this.showContent();
+    }
+
+    /**
+     * this method shows game over screen in the application.
+     * is shows who is winner along with rematch and menu button.
+     */
+    drawGameOverScreen() {
+        this.showContent();
+    }
+
+    /**
+     * this method hides and displays menu, gameplaying and gameover screen
+     * according to current state of application.
+     */
+    showContent() {
+        MENU.style.display = 'none';
+        GAME_SCREEN.style.display = 'none';
+        GAME_OVER_SCREEN.style.display = 'none';
+
+        switch (this.currentState) {
+            case INITIAL:
+                MENU.style.display = 'block';
+                break;
+            case GAME_PLAYING:
+                GAME_SCREEN.style.display = 'block';
+
+                break;
+            case GAME_OVER:
+                GAME_OVER_SCREEN.style.display = 'block';
+                break;
+        }
     }
 }
