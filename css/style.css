@@ -208,3 +208,16 @@ body {
 
 
 /* gameover screen end */
+
+
+/* remove this */
+
+#fen-in-div {
+    position: relative;
+    left: 60px;
+}
+
+#fen-in {
+    width: 480px;
+    left: 60px;
+}

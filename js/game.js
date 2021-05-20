@@ -1,11 +1,19 @@
 class ChessGame {
-    "use strict"
 
     constructor() {
 
-        this.currentState = INITIAL;
-        // this.currentState = GAME_PLAYING;
+        // this.currentState = INITIAL;
+        this.currentState = GAME_PLAYING;
         // this.currentState = GAME_OVER;
+    }
+
+    /**
+     * this method creates all the necessary objects for the application.
+     */
+    createObjects() {
+        this.engine = new Engine()
+        this.chessBoard = new Chessboard()
+
     }
 
     /**
@@ -17,8 +25,14 @@ class ChessGame {
         window.requestAnimationFrame(() => {
             this.runGameLoop();
         });
-
+        this.createObjects();
         this.bindEvents()
+
+        this.engine.initFilesRankBoard();
+        this.engine.initHashKeys();
+        this.engine.initSquare120To64();
+
+
 
     }
 
@@ -57,9 +71,9 @@ class ChessGame {
             this.currentState = GAME_PLAYING;
         })
 
-        RESIGN_GAME_BTN.addEventListener('click', () => {
-            this.currentState = GAME_OVER;
-        })
+        // RESIGN_GAME_BTN.addEventListener('click', () => {
+        //     this.currentState = GAME_OVER;
+        // })
 
         PLAY_AGAIN_BTN.addEventListener('click', () => {
             this.currentState = GAME_PLAYING;
@@ -68,6 +82,13 @@ class ChessGame {
         MENU_BTN.addEventListener('click', () => {
             this.currentState = INITIAL;
         })
+
+        // remove this after
+        SET_FEN.addEventListener('click', () => {
+            let fen = FEN.value;
+            this.chessBoard.parseFen(fen);
+            this.chessBoard.printBoard();
+        });
     }
 
     /**

@@ -150,8 +150,13 @@
 
 
             <div class="gameScreen">
+                <div id="fen-in-div">
+                    Fen: <br>
+                    <input type="text" id="fen-in">
+                    <button type="button" id="set-fen">set fen</button>
+                </div>
                 <!-- <img src="./images/board.png" alt="" height="400px" width="400px"> -->
-                <div class="chess-table">
+                <!-- <div class="chess-table">
                     <div id="h8" class="piece-box black-box"></div>
                     <div id="g8" class="piece-box white-box"></div>
                     <div id="f8" class="piece-box black-box"></div>
@@ -224,7 +229,7 @@
                     <div id="b1" class="piece-box white-box"></div>
                     <div id="a1" class="piece-box black-box"></div>
                 </div>
-                <button id="resign_game">Resign</button>
+                <button id="resign_game">Resign</button> -->
 
             </div>
 
@@ -268,7 +273,11 @@
 
         </div>
     </main>
-    <script src="./js/constant.js"></script>
+    <script src="./js/constants/game-constant.js"></script>
+    <script src="./js/constants/engine-constants.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/chess-engine.js"></script>
+    <script src="./js/chess-board.js"></script>
     <script src="./js/game.js "></script>
     <script src="./js/script.js "></script>
 </body>
