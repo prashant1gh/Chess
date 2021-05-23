@@ -11,8 +11,8 @@ class ChessGame {
      * this method creates all the necessary objects for the application.
      */
     createObjects() {
-        this.engine = new Engine()
-        this.chessBoard = new Chessboard()
+        this.engine = new Engine();
+        this.chessBoard = new Chessboard();
 
     }
 
@@ -26,7 +26,7 @@ class ChessGame {
             this.runGameLoop();
         });
         this.createObjects();
-        this.bindEvents()
+        this.bindEvents();
 
         this.engine.initFilesRankBoard();
         this.engine.initHashKeys();
@@ -85,9 +85,11 @@ class ChessGame {
 
         // remove this after
         SET_FEN.addEventListener('click', () => {
-            let fen = FEN.value;
+            let fen = FEN.value || START_FEN;
             this.chessBoard.parseFen(fen);
             this.chessBoard.printBoard();
+            MoveGeneration.generateMoves(this.chessBoard);
+            InputOutput.printMoveList(this.chessBoard);
         });
     }
 
@@ -103,6 +105,10 @@ class ChessGame {
      */
     drawGamePlayingScreen() {
         this.showContent();
+
+        // this.chessBoard.parseFen(START_FEN);
+        // this.chessBoard.printBoard();
+        // MoveGeneration.generateMoves(this.chessBoard);
     }
 
     /**

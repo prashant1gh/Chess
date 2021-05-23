@@ -1,18 +1,18 @@
 class Chessboard {
     constructor() {
         this.pieces = [];
-        this.side = COLOURS.WHITE;
+        this.side = COLOR.WHITE;
         this.fiftyMove = 0; // fifty move(black + white) without capture or pawn move can claim draw
         this.hisPly = 0; //half move count to maintain every move in a game
         this.ply = 0; //half move count in a search tree
         this.castlePermission = 0;
         this.enPassent = 0;
-        this.material = [];
-        this.piecesNumber = [] //what pieces type does it have and indexed by piece, piecesNumber[wp] = 4 if board has 4white pawns
+        this.material = []; //stores total value of pieces by color
+        this.piecesNumber = [] //how many pieces does it have of a type, indexed by piece, piecesNumber[wp] = 4 if board has 4white pawns
         this.piecesList = [] //all the pieces available in board eg.4 pawns, 2 rooks 1king etc
         this.positionKey = 0; //unique key for each position of board
 
-        this.moveList = [];
+        this.moveList = new Array(MAX_DEPTH * MAX_POSITION_MOVES);
         this.moveScore = [];
         this.moveListStart = [];
     }
@@ -65,7 +65,7 @@ class Chessboard {
                 finalKey ^= PIECE_KEYS[(piece * 120) + square];
             }
 
-            if (this.side == COLOURS.WHITE) {
+            if (this.side == COLOR.WHITE) {
                 finalKey ^= SIDE_KEY;
             }
 
@@ -79,7 +79,51 @@ class Chessboard {
         }
     }
 
+    printPieceLists() {
+        for (let piece = PIECES.WHITE_PAWN; piece <= PIECES.BLACK_KING; ++piece) {
+
+            for (let pieceNumber = 0; pieceNumber < this.piecesNumber[piece]; pieceNumber++) {
+                console.log('piece ' + PIECE_CHAR[piece] + ' on ' + printSquare(this.piecesList[pieceIndex(piece, pieceNumber)]));
+            }
+        }
+    }
+
+    updateListsMaterial() {
+
+        for (let index = 0; index < 14 * 120; index++) {
+            this.piecesList[index] = PIECES.EMPTY;
+        }
+
+        for (let index = 0; index < 2; index++) {
+            this.material[index] = 0;
+        }
+
+        for (let index = 0; index < 13; index++) {
+            this.piecesNumber[index] = 0;
+        }
+
+
+
+        for (let index = 0; index < 64; index++) {
+            let square = square120(index);
+            let piece = this.pieces[square];
+            if (piece != PIECES.EMPTY) {
+                // console.log('piece ' + piece + ' on ' + square);
+                let color = PIECE_COLOR[piece];
+                this.material[color] += PIECE_VALUE[piece];
+                this.piecesList[pieceIndex(piece, this.piecesNumber[piece])] = square;
+                this.piecesNumber[piece]++;
+            }
+        }
+
+        this.printPieceLists();
+    }
+
     resetBoard() {
+        for (let index = 0; index < BOARD_SQUARE_NUMBER; index++) {
+            this.pieces[index] = SQUARES.OFFBOARD;
+        }
+
         this.pieces.forEach(function(value) {
             value = SQUARES.OFFBOARD;
         });
@@ -88,20 +132,7 @@ class Chessboard {
             this.pieces[square120(index)] = PIECES.EMPTY;
         }
 
-        this.piecesList.forEach(function(value) {
-            value = PIECES.EMPTY;
-        });
-
-        this.material.forEach(function(value) {
-            value = 0;
-        });
-
-        this.piecesNumber.forEach(function(value) {
-            value = 0;
-        });
-
-
-        this.side = COLOURS.BOTH;
+        this.side = COLOR.BOTH;
         this.fiftyMove = 0;
         this.hisPly = 0;
         this.ply = 0;
@@ -172,7 +203,7 @@ class Chessboard {
                 case '7':
                 case '8':
                     piece = PIECES.EMPTY;
-                    count = fen[fenCount].charCodeAt() - '0'.charCodeAt();
+                    count = parseInt(fen[fenCount]);
                     break;
 
                 case '/':
@@ -195,7 +226,7 @@ class Chessboard {
             fenCount++;
         }
 
-        this.side = (fen[fenCount] === 'w') ? COLOURS.WHITE : COLOURS.BLACK;
+        this.side = (fen[fenCount] === 'w') ? COLOR.WHITE : COLOR.BLACK;
         fenCount += 2;
 
         for (let i = 0; i < 4; i++) {
@@ -225,11 +256,108 @@ class Chessboard {
 
         if (fen[fenCount] != '-') {
             file = fen[fenCount].charCodeAt() - 'a'.charCodeAt();
+            console.log('file: ' + file);
             rank = fen[fenCount + 1].charCodeAt() - '1'.charCodeAt();
-            console.log("fen[fenCount]: " + fen[fenCount] + "file: " + file + "rank: " + rank);
+            // console.log("fen[fenCount]: " + fen[fenCount] + "file: " + file + "rank: " + rank);
             this.enPassent = fileRankToSquare(file, rank);
         }
 
         this.positionKey = this.generatePositionKey();
+        this.updateListsMaterial();
+        this.printSquareAttacked();
     }
+
+    printSquareAttacked() {
+        let piece = '';
+        console.log("\nAttacked: \n");
+
+        for (let rank = RANKS.RANK_8; rank >= RANKS.RANK_1; rank--) {
+            let line = ((rank + 1) + "   ");
+            for (let file = FILES.FILE_A; file <= FILES.FILE_H; file++) {
+                let square = fileRankToSquare(file, rank);
+                if (this.squareAttacked(square, this.side) == BOOL.TRUE) piece = 'X';
+                else piece = '-';
+                line += (" " + piece + " ");
+            }
+            console.log(line);
+        }
+        console.log("");
+    }
+
+
+    squareAttacked(square, side) {
+
+        // pawn
+        if (side == COLOR.WHITE) {
+            if (this.pieces[square - 11] == PIECES.WHITE_PAWN || this.pieces[square - 9] == PIECES.WHITE_PAWN) {
+                return BOOL.TRUE
+            }
+        } else {
+            if (this.pieces[square + 11] == PIECES.BLACK_PAWN || this.pieces[square + 9] == PIECES.BLACK_PAWN) {
+                return BOOL.TRUE
+
+            }
+        }
+
+
+        // knight
+        for (let index = 0; index < 8; index++) {
+            let piece = this.pieces[square + KNIGHT_DIRECTION[index]];
+            if (piece != SQUARES.OFFBOARD && PIECE_COLOR[piece] == side && PIECE_KNIGHT[piece] == BOOL.TRUE) {
+                return BOOL.TRUE;
+            }
+        }
+
+        // sliding pieces rook-queen
+        for (let index = 0; index < 4; index++) {
+            let direction = ROOK_DIRECTION[index];
+            let target_square = square + direction;
+            let piece = this.pieces[target_square];
+
+            while (piece != SQUARES.OFFBOARD) {
+                if (piece != PIECES.EMPTY) {
+                    if (PIECE_ROOK_QUEEN[piece] == BOOL.TRUE && PIECE_COLOR[piece] == side) {
+                        return BOOL.TRUE;
+                    }
+                    break;
+                }
+
+                target_square += direction;
+                piece = this.pieces[target_square];
+            }
+        }
+
+        // queen -bishop
+        for (let index = 0; index < 4; index++) {
+            let direction = BISHOP_DIRECTION[index];
+            let target_square = square + direction;
+            let piece = this.pieces[target_square];
+
+            while (piece != SQUARES.OFFBOARD) {
+                if (piece != PIECES.EMPTY) {
+                    if (PIECE_BISHOP_QUEEN[piece] == BOOL.TRUE && PIECE_COLOR[piece] == side) {
+                        return BOOL.TRUE;
+                    }
+                    break;
+                }
+
+                target_square += direction;
+                piece = this.pieces[target_square];
+            }
+        }
+
+        //king
+        for (let index = 0; index < 8; index++) {
+            let piece = this.pieces[square + KING_DIRECTION[index]];
+            if (piece != SQUARES.OFFBOARD && PIECE_COLOR[piece] == side && PIECE_KING[piece] == BOOL.TRUE) {
+                return BOOL.TRUE;
+            }
+        }
+
+        return BOOL.FALSE
+    }
+
+
+
+
 }

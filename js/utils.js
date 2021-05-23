@@ -5,7 +5,7 @@
  * @returns square at which file and rank intersects
  */
 function fileRankToSquare(file, rank) {
-    return (21 + file) + (rank * 10)
+    return ((21 + file) + (rank * 10));
 }
 
 
@@ -46,4 +46,34 @@ function square64(square120) {
  */
 function square120(square64) {
     return SQUARE64_TO_SQUARE120[(square64)]
+}
+
+
+function fromSquare(move) {
+    return (move & 0x7F);
+}
+
+function toSquare(move) {
+    return ((move >> 7) & 0x7F);
+}
+
+function captured(move) {
+    return ((move >> 14) & 0xF);
+}
+
+
+function promot(move) {
+    return ((move >> 20) & 0xF);
+}
+
+function squareOffBoard(square) {
+    if (FILES_BOARD[square] === SQUARES.OFFBOARD) return BOOL.TRUE;
+}
+
+
+
+// remove this
+
+function printSquare(square) {
+    return FILE_CHAR[FILES_BOARD[square]] + RANK_CHAR[RANKS_BOARD[square]];
 }
