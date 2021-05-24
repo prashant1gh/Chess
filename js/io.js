@@ -1,45 +1,47 @@
 class InputOutput {
 
 
+    static printSquare(square) {
+        return (FILE_CHARACTER[FILES_BOARD[square]] + RANK_CHARACTER[RANKS_BOARD[square]]);
+    }
+
     static printMove(move) {
         let moveString;
-        let fileFrom = FILES_BOARD[fromSquare(move)];
-        let rankFrom = RANKS_BOARD[fromSquare(move)];
-        let fileTO = FILES_BOARD[toSquare(move)];
-        let rankTo = RANKS_BOARD[toSquare(move)];
 
-        moveString = FILE_CHAR[fileFrom] + RANK_CHAR[rankFrom] + FILE_CHAR[fileTO] + RANK_CHAR[rankTo];
+        let fileFrom = FILES_BOARD[getFromSquare(move)];
+        let rowFrom = RANKS_BOARD[getFromSquare(move)];
+        let fileTo = FILES_BOARD[getToSquare(move)];
+        let rowTo = RANKS_BOARD[getToSquare(move)];
 
-        let promoted = promot(move);
-        // console.log('promoted = ' + promot);
+        moveString = FILE_CHARACTER[fileFrom] + RANK_CHARACTER[rowFrom] + FILE_CHARACTER[fileTo] + RANK_CHARACTER[rowTo];
 
-        if (promoted !== PIECES.EMPTY) {
-            var promotedChar = 'q';
-
+        let promoted = promote(move);
+        // console.log('promoted = ' + promoted);
+        if (promoted != PIECES.EMPTY) {
+            let pieceCharacter = 'q';
             if (PIECE_KNIGHT[promoted] == BOOL.TRUE) {
-                promotedChar = 'n';
+                pieceCharacter = 'n';
             } else if (PIECE_ROOK_QUEEN[promoted] == BOOL.TRUE && PIECE_BISHOP_QUEEN[promoted] == BOOL.FALSE) {
-                promotedChar = 'r';
+                pieceCharacter = 'r';
             } else if (PIECE_ROOK_QUEEN[promoted] == BOOL.FALSE && PIECE_BISHOP_QUEEN[promoted] == BOOL.TRUE) {
-                promotedChar = 'b';
+                pieceCharacter = 'b';
             }
-            moveString += promotedChar;
+            moveString += pieceCharacter;
         }
-        console.log(moveString)
         return moveString;
     }
 
-    static printMoveList(chessBoard) {
+    static printMoveList(GameBoard) {
+
+        let index;
         let move;
         let num = 1;
-        console.log('MoveList');
-        for (let index = chessBoard.moveListStart[chessBoard.ply]; index < chessBoard.moveListStart[chessBoard.ply + 1]; ++index) {
-            move = chessBoard.moveList[index];
-            console.log(this.printMove(move))
-                // console.log('Move:' + num + ':' + this.printMove(move));
+        console.log('MoveList:');
+
+        for (index = GameBoard.moveListStart[GameBoard.ply]; index < GameBoard.moveListStart[GameBoard.ply + 1]; ++index) {
+            move = GameBoard.moveList[index];
+            console.log('Move:' + num + ':' + this.printMove(move));
             num++;
         }
     }
 }
-
-//chessBoard.moveListStart[chessBoard.ply + 1]

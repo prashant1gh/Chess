@@ -28,7 +28,7 @@ class ChessGame {
         this.createObjects();
         this.bindEvents();
 
-        this.engine.initFilesRankBoard();
+        this.engine.initFilesRanksBoard();
         this.engine.initHashKeys();
         this.engine.initSquare120To64();
 
@@ -88,7 +88,7 @@ class ChessGame {
             let fen = FEN.value || START_FEN;
             this.chessBoard.parseFen(fen);
             this.chessBoard.printBoard();
-            MoveGeneration.generateMoves(this.chessBoard);
+            MoveGeneration.generateMoves(this.chessBoard)
             InputOutput.printMoveList(this.chessBoard);
         });
     }

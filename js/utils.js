@@ -5,8 +5,9 @@
  * @returns square at which file and rank intersects
  */
 function fileRankToSquare(file, rank) {
-    return ((21 + file) + (rank * 10));
+    return ((21 + (file)) + ((rank) * 10));
 }
+
 
 
 /**
@@ -15,8 +16,8 @@ function fileRankToSquare(file, rank) {
  * @param {number} pieceNumber piece number in 
  * @returns square in which the piece sit
  */
-function pieceIndex(piece, pieceNumber) {
-    return piece * 10 + pieceNumber
+function getPieceIndex(piece, pieceNumberArray) {
+    return (piece * 10 + pieceNumberArray);
 }
 
 
@@ -24,9 +25,11 @@ function pieceIndex(piece, pieceNumber) {
  * 
  * @returns generates 32bit random number
  */
-function rand_32() {
+function getRandom_32() {
+
     return (Math.floor((Math.random() * 255) + 1) << 23) | (Math.floor((Math.random() * 255) + 1) << 16) |
         (Math.floor((Math.random() * 255) + 1) << 8) | Math.floor((Math.random() * 255) + 1);
+
 }
 
 
@@ -35,8 +38,8 @@ function rand_32() {
  * @param {number} square120 square number from 120 square board format
  * @returns square number in 64 square board format
  */
-function square64(square120) {
-    return SQUARE120_TO_SQUARE64[(square120)]
+function toSquare64(square120) {
+    return SQUARE120_TO_SQUARE64[(square120)];
 }
 
 /**
@@ -44,36 +47,21 @@ function square64(square120) {
  * @param {number} square64 square number in 64 square board format
  * @returns square number from 120 square board format
  */
-function square120(square64) {
-    return SQUARE64_TO_SQUARE120[(square64)]
+function toSquare120(square64) {
+    return SQUARE64_TO_SQUARE120[(square64)];
 }
 
 
-function fromSquare(move) {
-    return (move & 0x7F);
-}
+function getFromSquare(move) { return (move & 0x7F); }
 
-function toSquare(move) {
-    return ((move >> 7) & 0x7F);
-}
+function getToSquare(move) { return ((move >> 7) & 0x7F); }
 
-function captured(move) {
-    return ((move >> 14) & 0xF);
-}
+function capture(move) { return ((move >> 14) & 0xF); }
+
+function promote(move) { return ((move >> 20) & 0xF); }
 
 
-function promot(move) {
-    return ((move >> 20) & 0xF);
-}
-
-function squareOffBoard(square) {
-    if (FILES_BOARD[square] === SQUARES.OFFBOARD) return BOOL.TRUE;
-}
-
-
-
-// remove this
-
-function printSquare(square) {
-    return FILE_CHAR[FILES_BOARD[square]] + RANK_CHAR[RANKS_BOARD[square]];
+function isSquareOffBoard(square) {
+    if (FILES_BOARD[square] == SQUARES.OFFBOARD) return BOOL.TRUE;
+    return BOOL.FALSE;
 }
