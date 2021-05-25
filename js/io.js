@@ -31,15 +31,16 @@ class InputOutput {
         return moveString;
     }
 
-    static printMoveList(GameBoard) {
+    static printMoveList(chessBoard) {
 
         let index;
         let move;
         let num = 1;
         console.log('MoveList:');
+        console.log(chessBoard)
 
-        for (index = GameBoard.moveListStart[GameBoard.ply]; index < GameBoard.moveListStart[GameBoard.ply + 1]; ++index) {
-            move = GameBoard.moveList[index];
+        for (index = chessBoard.moveListStart[chessBoard.ply]; index < chessBoard.moveListStart[chessBoard.ply + 1]; ++index) {
+            move = chessBoard.moveList[index];
             console.log('Move:' + num + ':' + this.printMove(move));
             num++;
         }

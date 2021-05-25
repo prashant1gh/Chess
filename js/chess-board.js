@@ -1,20 +1,69 @@
 class Chessboard {
     constructor() {
 
-        this.pieces = new Array(BOARD_SQUARE_NUMBERS);
+        this.pieces = [];
         this.side = COLOURS.WHITE;
         this.fiftyMove = 0;
         this.hisPly = 0;
+        this.history = [];
         this.ply = 0;
-        this.enPassent = 0;
+        this.enPassant = 0;
         this.castlePermission = 0;
-        this.material = new Array(2); // WHITE,BLACK material of pieces
-        this.piecesNumber = new Array(13); // indexed by Pce
-        this.piecesList = new Array(14 * 10);
+        this.material = []; // WHITE,BLACK material of pieces
+        this.piecesNumber = []; // indexed by Pce
+        this.piecesList = [];
         this.positionKey = 0;
-        this.moveList = new Array(MAX_DEPTH * MAX_POSITION_MOVES);
-        this.moveScores = new Array(MAX_DEPTH * MAX_POSITION_MOVES);
-        this.moveListStart = new Array(MAX_DEPTH);
+        this.moveList = [];
+        this.moveScores = [];
+        this.moveListStart = [];
+    }
+
+    checkBoard() {
+
+        var t_pceNum = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var t_material = [0, 0];
+        var sq64, t_piece, t_pce_num, sq120, colour, pcount;
+
+        for (t_piece = PIECES.wP; t_piece <= PIECES.bK; ++t_piece) {
+            for (t_pce_num = 0; t_pce_num < this.piecesNumber[t_piece]; ++t_pce_num) {
+                sq120 = this.piecesList[getPieceIndex(t_piece, t_pce_num)];
+                if (this.pieces[sq120] != t_piece) {
+                    console.log('Error Pce Lists');
+                    return BOOL.FALSE;
+                }
+            }
+        }
+
+        for (sq64 = 0; sq64 < 64; ++sq64) {
+            sq120 = toSquare120(sq64);
+            t_piece = this.pieces[sq120];
+            t_pceNum[t_piece]++;
+            t_material[PIECE_COLOUR[t_piece]] += PIECE_VALUE[t_piece];
+        }
+
+        for (t_piece = PIECES.wP; t_piece <= PIECES.bK; ++t_piece) {
+            if (t_pceNum[t_piece] != this.piecesNumber[t_piece]) {
+                console.log('Error t_pceNum');
+                return BOOL.FALSE;
+            }
+        }
+
+        if (t_material[COLOURS.WHITE] != this.material[COLOURS.WHITE] ||
+            t_material[COLOURS.BLACK] != this.material[COLOURS.BLACK]) {
+            console.log('Error t_material');
+            return BOOL.FALSE;
+        }
+
+        if (this.side != COLOURS.WHITE && this.side != COLOURS.BLACK) {
+            console.log('Error this.side');
+            return BOOL.FALSE;
+        }
+
+        if (this.generatePositionKey() != this.positionKey) {
+            console.log('Error this.posKey');
+            return BOOL.FALSE;
+        }
+        return BOOL.TRUE;
     }
 
 
@@ -42,7 +91,7 @@ class Chessboard {
 
         console.log(line);
         console.log("side:" + SIDE_CHARACTER[this.side]);
-        console.log("enPassent:" + this.enPassent);
+        console.log("enPassant:" + this.enPassant);
         line = "";
 
         if (this.castlePermission & CASTLE_BIT.WKCA) line += 'K';
@@ -70,8 +119,8 @@ class Chessboard {
             finalKey ^= SideKey;
         }
 
-        if (this.enPassent != SQUARES.NO_SQ) {
-            finalKey ^= PIECE_KEYS[this.enPassent];
+        if (this.enPassant != SQUARES.NO_SQ) {
+            finalKey ^= PIECE_KEYS[this.enPassant];
         }
 
         finalKey ^= CASTLE_KEYS[this.castlePermission];
@@ -139,7 +188,7 @@ class Chessboard {
         }
 
         this.side = COLOURS.BOTH;
-        this.enPassent = SQUARES.NO_SQ;
+        this.enPassant = SQUARES.NO_SQ;
         this.fiftyMove = 0;
         this.ply = 0;
         this.hisPly = 0;
@@ -267,7 +316,7 @@ class Chessboard {
             file = fen[fenCnt].charCodeAt() - 'a'.charCodeAt();
             rank = fen[fenCnt + 1].charCodeAt() - '1'.charCodeAt();
             console.log("fen[fenCnt]:" + fen[fenCnt] + " File:" + file + " Rank:" + rank);
-            this.enPassent = fileRankToSquare(file, rank);
+            this.enPassant = fileRankToSquare(file, rank);
         }
 
         this.positionKey = this.generatePositionKey();

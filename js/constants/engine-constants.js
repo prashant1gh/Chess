@@ -74,8 +74,8 @@ const MAX_DEPTH = 64;
 const FILES_BOARD = [];
 const RANKS_BOARD = [];
 
-const START_FEN = "1nbqkbnr/pppppppp/8/7r/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-// const START_FEN = "rnbqkbnr/pppppppp/8/8/8/PPPPPPPP/8/RNBQKBNR w KQkq - 0 1";
+// const START_FEN = "1nbqkbnr/pppppppp/8/7r/8/8/8/7K w KQkq - 0 1";
+const START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 const PIECE_CHARACTER = ".PNBRQKpnbrqk";
 const SIDE_CHARACTER = "wb-";
@@ -118,6 +118,22 @@ const SQUARE64_TO_SQUARE120 = [];
 
 
 var SideKey;
+
+const KINGS = [PIECES.wK, PIECES.bK];
+const CASTLE_PERMISSIONS = [
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 13, 15, 15, 15, 12, 15, 15, 14, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 7, 15, 15, 15, 3, 15, 15, 11, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+    15, 15, 15, 15, 15, 15, 15, 15, 15, 15
+];
 
 /*	
 0000 0000 0000 0000 0000 0111 1111 -> From 0x7F

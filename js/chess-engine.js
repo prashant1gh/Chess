@@ -67,4 +67,17 @@ class Engine {
 
     }
 
+    initBoardVariables(chessboard) {
+        let index = 0;
+        for (index = 0; index < MAX_GAME_MOVES; ++index) {
+            chessboard.history.push({
+                move: NO_MOVE,
+                castlePermission: 0,
+                enPassant: 0,
+                fiftyMove: 0,
+                positionKey: 0
+            });
+        }
+    }
+
 }

@@ -31,6 +31,7 @@ class ChessGame {
         this.engine.initFilesRanksBoard();
         this.engine.initHashKeys();
         this.engine.initSquare120To64();
+        this.engine.initBoardVariables(this.chessBoard);
 
 
 
@@ -90,6 +91,14 @@ class ChessGame {
             this.chessBoard.printBoard();
             MoveGeneration.generateMoves(this.chessBoard)
             InputOutput.printMoveList(this.chessBoard);
+            this.chessBoard.checkBoard();
+            MakeMove.makeMove(this.chessBoard.moveList[19], this.chessBoard);
+            this.chessBoard.printBoard();
+            this.chessBoard.checkBoard();
+            MakeMove.ReverseMove(this.chessBoard);
+            this.chessBoard.printBoard();
+            this.chessBoard.checkBoard();
+
         });
     }
 
@@ -105,6 +114,13 @@ class ChessGame {
      */
     drawGamePlayingScreen() {
         this.showContent();
+
+        // let fen = FEN.value || START_FEN;
+        // this.chessBoard.parseFen(fen);
+        // this.chessBoard.printBoard();
+        // MoveGeneration.generateMoves(this.chessBoard)
+        // InputOutput.printMoveList(this.chessBoard);
+        // this.chessBoard.checkBoard();
 
         // this.chessBoard.parseFen(START_FEN);
         // this.chessBoard.printBoard();

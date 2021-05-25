@@ -65,3 +65,19 @@ function isSquareOffBoard(square) {
     if (FILES_BOARD[square] == SQUARES.OFFBOARD) return BOOL.TRUE;
     return BOOL.FALSE;
 }
+
+function hashPiece(piece, square, chessboard) {
+    chessboard.positionKey ^= PIECE_KEYS[(piece * 120) + square];
+}
+
+function hashCastle(chessboard) {
+    chessboard.positionKey ^= CASTLE_KEYS[chessboard.castlePermission];
+}
+
+function hashSide(chessboard) {
+    chessboard.positionKey ^= SideKey;
+}
+
+function hashEnPassant(chessboard) {
+    chessboard.positionKey ^= PIECE_KEYS[chessboard.enPassant];
+}

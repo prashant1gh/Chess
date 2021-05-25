@@ -96,13 +96,13 @@ class MoveGeneration {
                     this.addWhitePawnCaptureMove(square, square + 11, chessBoard.pieces[square + 11], chessBoard);
                 }
 
-                if (chessBoard.enPassent != SQUARES.NOSQ) {
-                    if (square + 9 == chessBoard.enPassent) {
-                        this.addEnPassantMove(this.move(square, square + 9, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_EN_PASSENT), chessBoard);
+                if (chessBoard.enPassant != SQUARES.NOSQ) {
+                    if (square + 9 == chessBoard.enPassant) {
+                        this.addEnPassantMove(this.move(square, square + 9, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_EN_PASSANT), chessBoard);
                     }
 
-                    if (square + 11 == chessBoard.enPassent) {
-                        this.addEnPassantMove(this.move(square, square + 11, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_EN_PASSENT), chessBoard);
+                    if (square + 11 == chessBoard.enPassant) {
+                        this.addEnPassantMove(this.move(square, square + 11, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_EN_PASSANT), chessBoard);
                     }
                 }
 
@@ -111,7 +111,7 @@ class MoveGeneration {
 
             if (chessBoard.castlePermission & CASTLE_BIT.WKCA) {
                 if (chessBoard.pieces[SQUARES.F1] == PIECES.EMPTY && chessBoard.pieces[SQUARES.G1] == PIECES.EMPTY) {
-                    if (SqAttacked(SQUARES.F1, COLOURS.BLACK) == BOOL.FALSE && SqAttacked(SQUARES.E1, COLOURS.BLACK) == BOOL.FALSE) {
+                    if (chessBoard.squareAttacked(SQUARES.F1, COLOURS.BLACK) == BOOL.FALSE && chessBoard.squareAttacked(SQUARES.E1, COLOURS.BLACK) == BOOL.FALSE) {
                         this.addQuietMove(this.move(SQUARES.E1, SQUARES.G1, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_CASTLEING), chessBoard);
                     }
                 }
@@ -120,7 +120,7 @@ class MoveGeneration {
 
             if (chessBoard.castlePermission & CASTLE_BIT.WQCA) {
                 if (chessBoard.pieces[SQUARES.D1] == PIECES.EMPTY && chessBoard.pieces[SQUARES.C1] == PIECES.EMPTY && chessBoard.pieces[SQUARES.B1] == PIECES.EMPTY) {
-                    if (SqAttacked(SQUARES.D1, COLOURS.BLACK) == BOOL.FALSE && SqAttacked(SQUARES.E1, COLOURS.BLACK) == BOOL.FALSE) {
+                    if (chessBoard.squareAttacked(SQUARES.D1, COLOURS.BLACK) == BOOL.FALSE && chessBoard.squareAttacked(SQUARES.E1, COLOURS.BLACK) == BOOL.FALSE) {
                         this.addQuietMove(this.move(SQUARES.E1, SQUARES.C1, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_CASTLEING), chessBoard);
                     }
                 }
@@ -146,19 +146,19 @@ class MoveGeneration {
                     this.addBlackPawnCaptureMove(square, square - 11, chessBoard.pieces[square - 11], chessBoard);
                 }
 
-                if (chessBoard.enPassent != SQUARES.NOSQ) {
-                    if (square - 9 == chessBoard.enPassent) {
-                        this.addEnPassantMove(this.move(square, square - 9, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_EN_PASSENT), chessBoard);
+                if (chessBoard.enPassant != SQUARES.NOSQ) {
+                    if (square - 9 == chessBoard.enPassant) {
+                        this.addEnPassantMove(this.move(square, square - 9, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_EN_PASSANT), chessBoard);
                     }
 
-                    if (square - 11 == chessBoard.enPassent) {
-                        this.addEnPassantMove(this.move(square, square - 11, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_EN_PASSENT), chessBoard);
+                    if (square - 11 == chessBoard.enPassant) {
+                        this.addEnPassantMove(this.move(square, square - 11, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_EN_PASSANT), chessBoard);
                     }
                 }
             }
             if (chessBoard.castlePermission & CASTLE_BIT.BKCA) {
                 if (chessBoard.pieces[SQUARES.F8] == PIECES.EMPTY && chessBoard.pieces[SQUARES.G8] == PIECES.EMPTY) {
-                    if (SqAttacked(SQUARES.F8, COLOURS.WHITE) == BOOL.FALSE && SqAttacked(SQUARES.E8, COLOURS.WHITE) == BOOL.FALSE) {
+                    if (chessBoard.squareAttacked(SQUARES.F8, COLOURS.WHITE) == BOOL.FALSE && chessBoard.squareAttacked(SQUARES.E8, COLOURS.WHITE) == BOOL.FALSE) {
                         this.addQuietMove(this.move(SQUARES.E8, SQUARES.G8, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_CASTLEING), chessBoard);
                     }
                 }
@@ -166,7 +166,7 @@ class MoveGeneration {
 
             if (chessBoard.castlePermission & CASTLE_BIT.BQCA) {
                 if (chessBoard.pieces[SQUARES.D8] == PIECES.EMPTY && chessBoard.pieces[SQUARES.C8] == PIECES.EMPTY && chessBoard.pieces[SQUARES.B8] == PIECES.EMPTY) {
-                    if (SqAttacked(SQUARES.D8, COLOURS.WHITE) == BOOL.FALSE && SqAttacked(SQUARES.E8, COLOURS.WHITE) == BOOL.FALSE) {
+                    if (chessBoard.squareAttacked(SQUARES.D8, COLOURS.WHITE) == BOOL.FALSE && chessBoard.squareAttacked(SQUARES.E8, COLOURS.WHITE) == BOOL.FALSE) {
                         this.addQuietMove(this.move(SQUARES.E8, SQUARES.C8, PIECES.EMPTY, PIECES.EMPTY, MOVE_FLAG_CASTLEING), chessBoard);
                     }
                 }
