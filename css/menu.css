@@ -1,0 +1,61 @@
+.flex-item-container {
+    height: 100px;
+    width: 100px;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vs-players {
+    position: relative;
+    margin: 2rem 2rem;
+}
+
+.item-caption {
+    text-align: center;
+    margin-top: .2rem;
+    font-size: 1.2rem;
+    color: #666463;
+}
+
+.active {
+    border: .3rem solid #7fa650;
+    border-radius: 5px;
+}
+
+.flex-item-container:hover {
+    border: .3rem solid #7fa650;
+    border-radius: 5px;
+}
+
+.btn-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    align-items: center;
+    border: 0;
+    border-radius: .3rem;
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: 200;
+    justify-content: center;
+    font-size: 1.3rem;
+    height: 3rem;
+    min-width: 13rem;
+    padding: 0 1.8rem;
+    background-color: #dbd9d7;
+    border-bottom: .1rem solid #a7a6a2;
+    color: #666463;
+    margin: 2rem .5rem;
+}
+
+#play_game:hover {
+    box-shadow: 1px 1px 5px #7fa650;
+}

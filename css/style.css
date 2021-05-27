@@ -45,94 +45,7 @@ body {
     color: white;
 }
 
-
-/* menu */
-
-.flex-item-container {
-    height: 100px;
-    width: 100px;
-}
-
-.flex-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.vs-players {
-    position: relative;
-    margin: 2rem 2rem;
-}
-
-.item-caption {
-    text-align: center;
-    margin-top: .2rem;
-    font-size: 1.2rem;
-    color: #666463;
-}
-
-.active {
-    border: .3rem solid #7fa650;
-    border-radius: 5px;
-}
-
-.flex-item-container:hover {
-    border: .3rem solid #7fa650;
-    border-radius: 5px;
-}
-
-.btn-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn {
-    align-items: center;
-    border: 0;
-    border-radius: .3rem;
-    cursor: pointer;
-    display: inline-flex;
-    font-weight: 200;
-    justify-content: center;
-    font-size: 1.3rem;
-    height: 3rem;
-    min-width: 13rem;
-    padding: 0 1.8rem;
-    background-color: #dbd9d7;
-    border-bottom: .1rem solid #a7a6a2;
-    color: #666463;
-    margin: 2rem .5rem;
-}
-
-#play_game:hover {
-    box-shadow: 1px 1px 5px #7fa650;
-}
-
-
-/* menu end */
-
-
-/* gameover screen */
-
-.gameOverScreen {
-    display: none;
-}
-
-.gameover-dialog {
-    background-color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 3px 6.3px 0.7px rgb(0 0 0 / 40%);
-    left: 50%;
-    min-width: 336px;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-}
-
-.gameover-dialog-header {
+.dialog-header {
     background-color: #666463;
     border-radius: 5px;
     color: white;
@@ -141,70 +54,8 @@ body {
     padding: 0.8rem 0;
 }
 
-.game-over-button-component {
-    display: flex;
-    flex-direction: row;
-    padding: 0 25px 10px;
-}
 
-.gameover-button-component {
-    align-items: center;
-    border: 0;
-    border-radius: .3rem;
-    cursor: pointer;
-    display: inline-flex;
-    font-weight: 200;
-    justify-content: center;
-    font-size: 1.3rem;
-    height: 3rem;
-    min-width: 13rem;
-    padding: 0 1.8rem;
-    background-color: #dbd9d7;
-    border-bottom: .1rem solid #a7a6a2;
-    color: #666463;
-    margin: 2rem .5rem;
-}
-
-.gameover-button-component:hover {
-    background-color: #bfbeba;
-    color: #666463;
-}
-
-.game-over-player-avatar-container {
-    height: 100px;
-    width: 100px;
-}
-
-.game-over-user-component {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.game-over-players {
-    position: relative;
-    margin: 2rem 4rem;
-}
-
-.game-over-player-name {
-    text-align: center;
-    margin-top: .2rem;
-    font-size: 1.2rem;
-    color: #666463;
-}
-
-.game-over-winner-crown {
-    position: absolute;
-    bottom: 15px;
-    height: 50px;
-    width: 50px;
-    background: url('../images/crown.png');
-}
-
-.winner {
-    border: .3rem solid #7fa650;
-    border-radius: 5px;
-}
+/* gameover screen */
 
 
 /* gameover screen end */

@@ -25,7 +25,7 @@ function getPieceIndex(piece, pieceNumberArray) {
  * 
  * @returns generates 32bit random number
  */
-function getRandom_32() {
+function getRandom32() {
 
     return (Math.floor((Math.random() * 255) + 1) << 23) | (Math.floor((Math.random() * 255) + 1) << 16) |
         (Math.floor((Math.random() * 255) + 1) << 8) | Math.floor((Math.random() * 255) + 1);
@@ -52,13 +52,21 @@ function toSquare120(square64) {
 }
 
 
-function getFromSquare(move) { return (move & 0x7F); }
+function getFromSquare(move) {
+    return (move & 0x7F);
+}
 
-function getToSquare(move) { return ((move >> 7) & 0x7F); }
+function getToSquare(move) {
+    return ((move >> 7) & 0x7F);
+}
 
-function capture(move) { return ((move >> 14) & 0xF); }
+function captured(move) {
+    return ((move >> 14) & 0xF);
+}
 
-function promote(move) { return ((move >> 20) & 0xF); }
+function promoted(move) {
+    return ((move >> 20) & 0xF);
+}
 
 
 function isSquareOffBoard(square) {
@@ -66,18 +74,32 @@ function isSquareOffBoard(square) {
     return BOOL.FALSE;
 }
 
-function hashPiece(piece, square, chessboard) {
-    chessboard.positionKey ^= PIECE_KEYS[(piece * 120) + square];
+/*	
+0000 0000 0000 0000 0000 0111 1111 -> From 0x7F
+0000 0000 0000 0011 1111 1000 0000 -> To >> 7, 0x7F
+0000 0000 0011 1100 0000 0000 0000 -> Captured >> 14, 0xF
+0000 0000 0100 0000 0000 0000 0000 -> EP 0x40000
+0000 0000 1000 0000 0000 0000 0000 -> Pawn Start 0x80000
+0000 1111 0000 0000 0000 0000 0000 -> Promoted Piece >> 20, 0xF
+0001 0000 0000 0000 0000 0000 0000 -> Castle 0x1000000
+*/
+
+function hashPiece(pce, sq) {
+    chessBoard.positionKey ^= PIECE_KEYS[(pce * 120) + sq];
 }
 
-function hashCastle(chessboard) {
-    chessboard.positionKey ^= CASTLE_KEYS[chessboard.castlePermission];
+function hashCastle() {
+    chessBoard.positionKey ^= CASTLE_KEYS[chessBoard.castlePermission];
 }
 
-function hashSide(chessboard) {
-    chessboard.positionKey ^= SideKey;
+function hashSide() {
+    chessBoard.positionKey ^= SideKey;
 }
 
-function hashEnPassant(chessboard) {
-    chessboard.positionKey ^= PIECE_KEYS[chessboard.enPassant];
+function hashEnPassant() {
+    chessBoard.positionKey ^= PIECE_KEYS[chessBoard.enPassant];
+}
+
+function getMirror64(square) {
+    return MIRROR64[square];
 }

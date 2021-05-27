@@ -4,14 +4,14 @@ class Engine {
         this.SideKey = 0;
     }
 
-    initFilesRanksBoard() {
+    initFilesRanksBroard() {
 
         let index = 0;
         let file = FILES.FILE_A;
         let rank = RANKS.RANK_1;
         let square = SQUARES.A1;
 
-        for (index = 0; index < BOARD_SQUARE_NUMBERS; ++index) {
+        for (index = 0; index < BOARD_SQUARE_NUM; ++index) {
             FILES_BOARD[index] = SQUARES.OFFBOARD;
             RANKS_BOARD[index] = SQUARES.OFFBOARD;
         }
@@ -27,28 +27,27 @@ class Engine {
 
     initHashKeys() {
         let index = 0;
-        let SideKey;
 
         for (index = 0; index < 14 * 120; ++index) {
-            PIECE_KEYS[index] = getRandom_32();
+            PIECE_KEYS[index] = getRandom32();
         }
 
-        SideKey = getRandom_32();
+        SideKey = getRandom32();
 
         for (index = 0; index < 16; ++index) {
-            CASTLE_KEYS[index] = getRandom_32();
+            CASTLE_KEYS[index] = getRandom32();
         }
     }
 
-    initSquare120To64() {
+    initSquare120ToSquare64() {
 
         let index = 0;
         let file = FILES.FILE_A;
         let rank = RANKS.RANK_1;
         let square = SQUARES.A1;
-        let square64 = 0;
+        let sq64 = 0;
 
-        for (index = 0; index < BOARD_SQUARE_NUMBERS; ++index) {
+        for (index = 0; index < BOARD_SQUARE_NUM; ++index) {
             SQUARE120_TO_SQUARE64[index] = 65;
         }
 
@@ -59,23 +58,31 @@ class Engine {
         for (rank = RANKS.RANK_1; rank <= RANKS.RANK_8; ++rank) {
             for (file = FILES.FILE_A; file <= FILES.FILE_H; ++file) {
                 square = fileRankToSquare(file, rank);
-                SQUARE64_TO_SQUARE120[square64] = square;
-                SQUARE120_TO_SQUARE64[square] = square64;
-                square64++;
+                SQUARE64_TO_SQUARE120[sq64] = square;
+                SQUARE120_TO_SQUARE64[square] = sq64;
+                sq64++;
             }
         }
 
     }
 
-    initBoardVariables(chessboard) {
+    initBoardVariables() {
+
         let index = 0;
         for (index = 0; index < MAX_GAME_MOVES; ++index) {
-            chessboard.history.push({
+            chessBoard.history.push({
                 move: NO_MOVE,
-                castlePermission: 0,
-                enPassant: 0,
+                castlePerm: 0,
+                enPas: 0,
                 fiftyMove: 0,
-                positionKey: 0
+                posKey: 0
+            });
+        }
+
+        for (index = 0; index < PV_ENTRIES; ++index) {
+            chessBoard.pvTable.push({
+                move: NO_MOVE,
+                posKey: 0
             });
         }
     }

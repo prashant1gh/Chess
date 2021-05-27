@@ -6,3 +6,6 @@ const MOVE_FLAG_CAPTURE = 0x7C000;
 const MOVE_FLAG_PROMOTE = 0xF00000;
 
 const NO_MOVE = 0;
+
+const MvvLvaValue = [0, 100, 200, 300, 400, 500, 600, 100, 200, 300, 400, 500, 600];
+const MvvLvaScores = [];
