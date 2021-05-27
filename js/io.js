@@ -42,3 +42,39 @@ function printMoveList() {
     }
     console.log('End MoveList');
 }
+
+function parseMove(from, to) {
+
+    generateMoves();
+
+    var Move = NO_MOVE;
+    var PromPce = PIECES.EMPTY;
+    var found = BOOL.FALSE;
+
+    for (index = chessBoard.moveListStart[chessBoard.ply]; index < chessBoard.moveListStart[chessBoard.ply + 1]; ++index) {
+        Move = chessBoard.moveList[index];
+        if (getFromSquare(Move) == from && getToSquare(Move) == to) {
+            PromPce = promoted(Move);
+            if (PromPce != PIECES.EMPTY) {
+                if ((PromPce == PIECES.wQ && chessBoard.side == COLOURS.WHITE) ||
+                    (PromPce == PIECES.bQ && chessBoard.side == COLOURS.BLACK)) {
+                    found = BOOL.TRUE;
+                    break;
+                }
+                continue;
+            }
+            found = BOOL.TRUE;
+            break;
+        }
+    }
+
+    if (found != BOOL.FALSE) {
+        if (makeMove(Move) == BOOL.FALSE) {
+            return NO_MOVE;
+        }
+        reverseMove();
+        return Move;
+    }
+
+    return NO_MOVE;
+}

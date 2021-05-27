@@ -8,68 +8,18 @@
     <title>Chess</title>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
+
+    <link rel="stylesheet" href="./css/menu.css">
+    <link rel="stylesheet" href="./css/board.css">
+    <link rel="stylesheet" href="./css/gameover.css">
     <style>
-        .chess-table {
-            height: 655px;
-            width: 655px;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            /* border: 3px solid black; */
-        }
-        
-        .piece-box {
-            width: 81px;
-            height: 82px;
+        #board {
             position: relative;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .piece {
-            width: 45px;
-            height: 45px;
-        }
-        
-        .piece-box-text {
-            /* display: none; */
-            position: absolute;
-            bottom: 0px;
-            right: 0px;
-            font-size: 12px;
-            color: #444;
-            opacity: 0.9;
-        }
-        /** ####################################### */
-        
-        .piece-box.white-box {
-            background: white;
-        }
-        
-        .piece-box.black-box {
-            background: gray;
-        }
-        
-        .piece-box.piece-selected {
-            background: yellow;
-            cursor: pointer;
-        }
-        
-        .piece-box.piece-ready {
-            background: greenyellow;
-        }
-        
-        .piece-box.piece-potential {
-            background: lightskyblue;
-            border: 0.1px solid rgb(24, 155, 236);
-        }
-        
-        .piece-box.piece-not-allowed {
-            background: coral;
-        }
-        
-        .piece-box.piece-pointer {
-            cursor: pointer;
+            top: 20px;
+            left: 60px;
+            width: 480px;
+            height: 480px;
+            border: 1px solid black;
         }
     </style>
 </head>
@@ -79,14 +29,14 @@
         <div class="container">
 
             <div class="menu">
-                <h2 class="gameover-dialog-header">Game Menu</h2>
+                <h2 class="dialog-header">Game Menu</h2>
 
                 <h4 class="sub-heading">Play vs</h4>
 
                 <div class="flex-container">
                     <div class="vs-players">
                         <div class="flex-item-container">
-                            <img src="./images/you.png" alt="player1">
+                            <img src="./images/you.png" alt="player1" height="70px" width="70px">
                         </div>
                         <div class="item-caption">
                             Human
@@ -94,7 +44,7 @@
                     </div>
                     <div class="vs-players">
                         <div class="flex-item-container">
-                            <img src="./images/naive-ai.png" alt="player2">
+                            <img src="./images/naive-ai.png" alt="player2" height="70px" width="70px">
                         </div>
                         <div class="item-caption">
                             Weak AI
@@ -103,7 +53,7 @@
 
                     <div class="vs-players">
                         <div class="flex-item-container">
-                            <img src="./images/ai.png" alt="player2">
+                            <img src="./images/ai.png" alt="player2" height="70px" width="70px">
                         </div>
                         <div class="item-caption">
                             AI
@@ -141,6 +91,11 @@
                     </div>
                 </div>
 
+                <h4 class="sub-heading">Choose Theme</h4>
+                <select name="themeSelector" id="themeSelector">
+                </select>
+
+
                 <div class="btn-wrapper">
 
                     <button id="play_game" class="btn">Play</button>
@@ -155,87 +110,18 @@
                     <input type="text" id="fen-in">
                     <button type="button" id="set-fen">set fen</button>
                 </div>
-                <!-- <img src="./images/board.png" alt="" height="400px" width="400px"> -->
-                <!-- <div class="chess-table">
-                    <div id="h8" class="piece-box black-box"></div>
-                    <div id="g8" class="piece-box white-box"></div>
-                    <div id="f8" class="piece-box black-box"></div>
-                    <div id="e8" class="piece-box white-box"></div>
-                    <div id="d8" class="piece-box black-box"></div>
-                    <div id="c8" class="piece-box white-box"></div>
-                    <div id="b8" class="piece-box black-box"></div>
-                    <div id="a8" class="piece-box white-box"></div>
-
-                    <div id="h7" class="piece-box white-box"></div>
-                    <div id="g7" class="piece-box black-box"></div>
-                    <div id="f7" class="piece-box white-box"></div>
-                    <div id="e7" class="piece-box black-box"></div>
-                    <div id="d7" class="piece-box white-box"></div>
-                    <div id="c7" class="piece-box black-box"></div>
-                    <div id="b7" class="piece-box white-box"></div>
-                    <div id="a7" class="piece-box black-box"></div>
-
-                    <div id="h6" class="piece-box black-box"></div>
-                    <div id="g6" class="piece-box white-box"></div>
-                    <div id="f6" class="piece-box black-box"></div>
-                    <div id="e6" class="piece-box white-box"></div>
-                    <div id="d6" class="piece-box black-box"></div>
-                    <div id="c6" class="piece-box white-box"></div>
-                    <div id="b6" class="piece-box black-box"></div>
-                    <div id="a6" class="piece-box white-box"></div>
-
-                    <div id="h5" class="piece-box white-box"></div>
-                    <div id="g5" class="piece-box black-box"></div>
-                    <div id="f5" class="piece-box white-box"></div>
-                    <div id="e5" class="piece-box black-box"></div>
-                    <div id="d5" class="piece-box white-box"></div>
-                    <div id="c5" class="piece-box black-box"></div>
-                    <div id="b5" class="piece-box white-box"></div>
-                    <div id="a5" class="piece-box black-box"></div>
-
-                    <div id="h4" class="piece-box black-box"></div>
-                    <div id="g4" class="piece-box white-box"></div>
-                    <div id="f4" class="piece-box black-box"></div>
-                    <div id="e4" class="piece-box white-box"></div>
-                    <div id="d4" class="piece-box black-box"></div>
-                    <div id="c4" class="piece-box white-box"></div>
-                    <div id="b4" class="piece-box black-box"></div>
-                    <div id="a4" class="piece-box white-box"></div>
-
-                    <div id="h3" class="piece-box white-box"></div>
-                    <div id="g3" class="piece-box black-box"></div>
-                    <div id="f3" class="piece-box white-box"></div>
-                    <div id="e3" class="piece-box black-box"></div>
-                    <div id="d3" class="piece-box white-box"></div>
-                    <div id="c3" class="piece-box black-box"></div>
-                    <div id="b3" class="piece-box white-box"></div>
-                    <div id="a3" class="piece-box black-box"></div>
-
-                    <div id="h2" class="piece-box black-box"></div>
-                    <div id="g2" class="piece-box white-box"></div>
-                    <div id="f2" class="piece-box black-box"></div>
-                    <div id="e2" class="piece-box white-box"></div>
-                    <div id="d2" class="piece-box black-box"></div>
-                    <div id="c2" class="piece-box white-box"></div>
-                    <div id="b2" class="piece-box black-box"></div>
-                    <div id="a2" class="piece-box white-box"></div>
-
-                    <div id="h1" class="piece-box white-box"></div>
-                    <div id="g1" class="piece-box black-box"></div>
-                    <div id="f1" class="piece-box white-box"></div>
-                    <div id="e1" class="piece-box black-box"></div>
-                    <div id="d1" class="piece-box white-box"></div>
-                    <div id="c1" class="piece-box black-box"></div>
-                    <div id="b1" class="piece-box white-box"></div>
-                    <div id="a1" class="piece-box black-box"></div>
+                <div>
+                    <span id="gs">asdnasl</span>
                 </div>
-                <button id="resign_game">Resign</button> -->
+                <div id="board">
+
+                </div>
 
             </div>
 
             <div class="gameOverScreen">
                 <div class="gameover-dialog">
-                    <div class="gameover-dialog-header">
+                    <div class="dialog-header">
                         <span>White Won</span>
                     </div>
 
@@ -277,18 +163,20 @@
     <script src="./js/constants/engine-constants.js"></script>
     <script src="./js/constants/move-generation-constants.js"></script>
     <script src="./js/constants/evaluation-constants.js"></script>
-
+    <!-- <script src="./js/constants/theme.js"></script> -->
     <script src="./js/utils.js"></script>
-    <script src="./js/io.js"></script>
     <script src="./js/chess-engine.js"></script>
     <script src="./js/chess-board.js"></script>
     <script src="./js/move-generation.js"></script>
+    <script src="./js/io.js"></script>
     <script src="./js/make-move.js"></script>
+    <script src="./js/gui.js"></script>
 
-    <script src="./js/artificail-intelligence/evaluate.js"></script>
-    <script src="./js/artificail-intelligence/pvtable.js"></script>
-    <script src="./js/artificail-intelligence/search.js"></script>
+    <!-- <script src="./js/menu.js"></script> -->
 
+    <script src="./js/artificail-intelligence/evaluate.js "></script>
+    <script src="./js/artificail-intelligence/pvtable.js "></script>
+    <script src="./js/artificail-intelligence/search.js "></script>
     <script src="./js/game.js "></script>
     <script src="./js/script.js "></script>
 </body>

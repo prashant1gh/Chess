@@ -87,4 +87,34 @@ class Engine {
         }
     }
 
+    initBoardSquares() {
+        var light = 0;
+        var rankName;
+        var fileName;
+        var divString;
+        var rankIter = 0;
+        var fileIter = 0;
+        var lightString;
+
+        let board = document.querySelector('#board')
+
+        for (rankIter = RANKS.RANK_8; rankIter >= RANKS.RANK_1; rankIter--) {
+            light = light ^ 1;
+            rankName = "rank" + (rankIter + 1);
+            for (fileIter = FILES.FILE_A; fileIter <= FILES.FILE_H; fileIter++) {
+                fileName = "file" + (fileIter + 1);
+
+                if (light == 0) lightString = "light1";
+                else lightString = "dark1";
+                let div = document.createElement("div");
+                divString = "square " + rankName + " " + fileName + " " + lightString;
+                div.className = divString;
+                div.id = fileRankToSquare(fileIter, rankIter);
+                light ^= 1;
+                board.appendChild(div)
+                div.addEventListener('click', clickSquare);
+            }
+        }
+    }
+
 }

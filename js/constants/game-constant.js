@@ -15,3 +15,5 @@ const GAME_OVER_SCREEN = document.querySelector('.gameOverScreen');
 // remove this after
 const FEN = document.querySelector('#fen-in');
 const SET_FEN = document.querySelector('#set-fen');
+
+const BOARD = document.getElementById('board');

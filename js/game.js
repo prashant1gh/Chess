@@ -33,7 +33,11 @@ class ChessGame {
         this.engine.initHashKeys();
         this.engine.initSquare120ToSquare64();
         this.engine.initBoardVariables();
+        this.engine.initBoardSquares()
         initMvvLva();
+        newGame(START_FEN);
+
+
 
 
 
@@ -93,6 +97,7 @@ class ChessGame {
             this.chessBoard.parseFen(fen);
             this.chessBoard.printBoard();
             searchPosition();
+            newGame(fen);
 
         });
     }
