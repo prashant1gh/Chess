@@ -24,6 +24,10 @@ This is a simple chess engine with a basic functionality with alpha-beta algorit
 
 The program is at its bare minimum right now. Chess can be played with human, and two levels of AI.
 
+## How to play
+click on pieces and click on the square you want to put your piece. its that simple.
+
+
 ## some screen shots of program
 
 ### Initial Screen
