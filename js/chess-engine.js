@@ -88,13 +88,13 @@ class Engine {
     }
 
     initBoardSquares() {
-        var light = 0;
-        var rankName;
-        var fileName;
-        var divString;
-        var rankIter = 0;
-        var fileIter = 0;
-        var lightString;
+        let light = 0;
+        let rankName;
+        let fileName;
+        let divString;
+        let rankIter = 0;
+        let fileIter = 0;
+        let lightString;
 
         let board = document.querySelector('#board')
 
@@ -115,6 +115,16 @@ class Engine {
                 div.addEventListener('click', clickSquare);
             }
         }
+    }
+
+    initSounds() {
+        let sounds = {
+            gameStartSound: new Audio('audio/gamestart.mp3'),
+            pieceMoveSound: new Audio('audio/piece-move.wav'),
+            gameoverSound: new Audio('audio/gameover.mp3'),
+        }
+
+        window.sounds = sounds;
     }
 
 }

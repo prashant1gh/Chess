@@ -6,6 +6,9 @@ gameController = {
     gameover: null,
 }
 
+var audio = new Audio('audio/piece-move.wav');
+
+
 
 
 function newGame(fenStr, vs) {
@@ -143,6 +146,8 @@ function makeUserMove() {
 
         userMove.from = SQUARES.NO_SQ;
         userMove.to = SQUARES.NO_SQ;
+
+
     }
 }
 
@@ -243,6 +248,7 @@ function moveGUIPiece(move) {
         removeGUIPiece(to);
         addGUIPiece(to, promoted(move));
     }
+    sounds.pieceMoveSound.play()
 
 }
 
@@ -275,6 +281,9 @@ function ThreeFoldRep() {
 }
 
 function checkResult() {
+
+    // checkSide();
+
     if (chessBoard.fiftyMove >= 100) {
         printGameStatus("GAME DRAWN {fifty move rule}");
 
@@ -314,7 +323,7 @@ function checkResult() {
 
     if (InCheck == BOOL.TRUE) {
         if (chessBoard.side == COLOURS.WHITE) {
-
+            chessGame.currentState = GAME_OVER;
             printGameStatus("GAME OVER {black mates}");
 
             return BOOL.TRUE;
@@ -331,6 +340,16 @@ function checkResult() {
     return BOOL.FALSE;
 }
 
+function checkSide() {
+    if (chessBoard.side == COLOURS.WHITE) {
+        sideText = 'white';
+    } else if (chessBoard.side == COLOURS.BLACK) {
+        sideText = 'black';
+    }
+
+    return sideText
+}
+
 
 
 function checkAndSet() {
@@ -342,8 +361,10 @@ function checkAndSet() {
     }
 }
 
-function printGameStatus(text) {
+function printGameStatus(text = "") {
     let gs = document.getElementById('gs');
+    let side2play = document.getElementById('side2play');
+    side2play.innerText = checkSide();
     gs.innerText = text;
 }
 

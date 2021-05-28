@@ -1,7 +1,7 @@
 class ChessGame {
 
     constructor() {
-
+        window.chessGame = this;
         this.currentState = INITIAL;
         // this.currentState = GAME_PLAYING;
         // this.currentState = GAME_OVER;
@@ -13,8 +13,8 @@ class ChessGame {
     createObjects() {
         this.engine = new Engine();
         this.chessBoard = new Chessboard();
-        window.chessBoard = this.chessBoard;
-        window.vs_player = 'human';
+        this.setInitialConfig();
+
 
     }
 
@@ -28,6 +28,9 @@ class ChessGame {
             this.runGameLoop();
         });
         this.createObjects();
+
+        this.engine.initSounds();
+
         this.bindEvents();
 
         this.engine.initFilesRanksBroard();
@@ -35,6 +38,7 @@ class ChessGame {
         this.engine.initSquare120ToSquare64();
         this.engine.initBoardVariables();
         this.engine.initBoardSquares()
+
         initMvvLva();
         newGame(START_FEN);
 
@@ -77,21 +81,27 @@ class ChessGame {
      */
     bindEvents() {
         PLAY_GAME_BTN.addEventListener('click', () => {
-
-
             let vs_player = document.querySelector('input[name="Vs-select"]:checked').value
             window.vs_player = vs_player;
-
             newGame(START_FEN);
 
             this.currentState = GAME_PLAYING;
+            sounds.gameStartSound.play();
+
+
         })
 
-        // RESIGN_GAME_BTN.addEventListener('click', () => {
-        //     this.currentState = GAME_OVER;
-        // })
+        RESIGN_GAME_BTN.addEventListener('click', () => {
+            let winner = document.querySelector('#winner-text');
+            winner.innerText = this.chessBoard.side ? 'White wins by resignation' : 'Black wins by resignation';
+            this.currentState = GAME_OVER;
+            sounds.gameoverSound.play();
+        })
 
         PLAY_AGAIN_BTN.addEventListener('click', () => {
+            window.vs_player = vs_player;
+
+            newGame(START_FEN)
             this.currentState = GAME_PLAYING;
         })
 
@@ -153,5 +163,10 @@ class ChessGame {
                 GAME_OVER_SCREEN.style.display = 'block';
                 break;
         }
+    }
+
+    setInitialConfig() {
+        window.chessBoard = this.chessBoard;
+        window.vs_player = 'human';
     }
 }
