@@ -159,7 +159,6 @@ class ChessGame {
     setInitialConfig() {
         window.chessBoard = this.chessBoard;
         window.vs_player = 'human';
-        window.board_theme = 1;
         window.piece_theme = 1;
 
     }

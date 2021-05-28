@@ -26,6 +26,8 @@ class Engine {
     }
 
     initHashKeys() {
+        window.SideKey = 0;
+
         let index = 0;
 
         for (index = 0; index < 14 * 120; ++index) {

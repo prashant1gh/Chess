@@ -1,17 +1,12 @@
-userMove = {}
-userMove.from = SQUARES.NO_SQ;
-userMove.to = SQUARES.NO_SQ;
+usermove = {}
+usermove.from = SQUARES.NO_SQ;
+usermove.to = SQUARES.NO_SQ;
 
 gameController = {
     gameover: null,
 }
 
-
-
-
-
 function newGame(fenStr, vs) {
-    setTheme();
     setAvatar()
     clearPreviousWinner();
     chessBoard.parseFen(fenStr);
@@ -93,19 +88,19 @@ function clickedSquare(pageX, pageY) {
 
 function clickPiece(event) {
 
-    if (userMove.from == SQUARES.NO_SQ) {
-        userMove.from = clickedSquare(event.pageX, event.pageY);
+    if (usermove.from == SQUARES.NO_SQ) {
+        usermove.from = clickedSquare(event.pageX, event.pageY);
 
     } else {
-        userMove.to = clickedSquare(event.pageX, event.pageY);
+        usermove.to = clickedSquare(event.pageX, event.pageY);
     }
     makeUserMove();
 }
 
 
 function clickSquare(event) {
-    if (userMove.from != SQUARES.NO_SQ) {
-        userMove.to = clickedSquare(event.pageX, event.pageY);
+    if (usermove.from != SQUARES.NO_SQ) {
+        usermove.to = clickedSquare(event.pageX, event.pageY);
         makeUserMove();
     } else {
 
@@ -115,9 +110,9 @@ function clickSquare(event) {
 
 function makeUserMove() {
 
-    if (userMove.from != SQUARES.NO_SQ && userMove.to != SQUARES.NO_SQ) {
+    if (usermove.from != SQUARES.NO_SQ && usermove.to != SQUARES.NO_SQ) {
 
-        let parsed = parseMove(userMove.from, userMove.to);
+        let parsed = parseMove(usermove.from, usermove.to);
 
         if (parsed != NO_MOVE) {
             makeMove(parsed);
@@ -137,29 +132,15 @@ function makeUserMove() {
             }
         }
 
-        deSelectSquare(userMove.from);
-        deSelectSquare(userMove.to);
+        deSelectSquare(usermove.from);
+        deSelectSquare(usermove.to);
 
 
-        userMove.from = SQUARES.NO_SQ;
-        userMove.to = SQUARES.NO_SQ;
+        usermove.from = SQUARES.NO_SQ;
+        usermove.to = SQUARES.NO_SQ;
 
 
     }
-}
-
-
-
-
-
-
-function setTheme() {
-    let currentBoardTheme = localStorage.setItem('currentBoardTheme', 1);
-    let CurrentPieceTheme = localStorage.setItem('CurrentPieceTheme', 1);
-
-    // currentBoardTheme = boardTheme[0];
-    // CurrentPieceTheme = pieceTheme[0];
-
 }
 
 function addGUIPiece(square, piece) {
@@ -176,7 +157,6 @@ function addGUIPiece(square, piece) {
     board.append(pceImage);
     pceImage.addEventListener('click', clickPiece);
 }
-
 
 function removeGUIPiece(square) {
     let pieces = document.querySelectorAll('.piece');
@@ -382,8 +362,8 @@ function startSearch(searchDepth) {
 
     // searchController.depth = MAX_DEPTH;
     searchController.depth = searchDepth;
-    var t = Date.now();
-    var tt = 1;
+    let t = Date.now();
+    let tt = 1;
 
     searchController.time = parseInt(tt) * 1000;
     searchPosition();

@@ -113,7 +113,6 @@ const LOOP_SLIDE_PIECE = [PIECES.wB, PIECES.wR, PIECES.wQ, 0, PIECES.bB, PIECES.
 const LOOP_SLIDE_INDEX = [0, 4];
 
 const PIECE_KEYS = [];
-var SideKey;
 const CASTLE_KEYS = [];
 
 const SQUARE120_TO_SQUARE64 = [];
