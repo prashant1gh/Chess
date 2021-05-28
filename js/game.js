@@ -28,11 +28,8 @@ class ChessGame {
             this.runGameLoop();
         });
         this.createObjects();
-
-        this.engine.initSounds();
-
         this.bindEvents();
-
+        this.engine.initSounds();
         this.engine.initFilesRanksBroard();
         this.engine.initHashKeys();
         this.engine.initSquare120ToSquare64();
@@ -83,6 +80,7 @@ class ChessGame {
         PLAY_GAME_BTN.addEventListener('click', () => {
             let vs_player = document.querySelector('input[name="Vs-select"]:checked').value
             window.vs_player = vs_player;
+            window.piece_theme = PIECE_THEME.value;
             newGame(START_FEN);
 
             this.currentState = GAME_PLAYING;
@@ -156,8 +154,13 @@ class ChessGame {
         }
     }
 
+
+
     setInitialConfig() {
         window.chessBoard = this.chessBoard;
         window.vs_player = 'human';
+        window.board_theme = 1;
+        window.piece_theme = 1;
+
     }
 }

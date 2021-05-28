@@ -95,7 +95,6 @@ class Engine {
         let rankIter = 0;
         let fileIter = 0;
         let lightString;
-        let boardTheme = 1;
 
         let board = document.querySelector('#board')
 
@@ -105,8 +104,8 @@ class Engine {
             for (fileIter = FILES.FILE_A; fileIter <= FILES.FILE_H; fileIter++) {
                 fileName = "file" + (fileIter + 1);
 
-                if (light == 0) lightString = "dark" + boardTheme;
-                else lightString = "light" + boardTheme;
+                if (light == 0) lightString = "dark" + 1;
+                else lightString = "light" + 1;
                 let div = document.createElement("div");
                 divString = "square " + rankName + " " + fileName + " " + lightString;
                 div.className = divString;

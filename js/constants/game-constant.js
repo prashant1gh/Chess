@@ -22,7 +22,7 @@ const GAMEOVER_BLACK_AVATAR = document.querySelector('#gameover-black-avatar');
 const PLAYER2 = document.querySelector('#player2');
 
 
-
+const PIECE_THEME = document.querySelector('#piece_selector')
 
 
 // remove this after

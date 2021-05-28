@@ -168,7 +168,7 @@ function addGUIPiece(square, piece) {
 
     rankName = "rank" + (rank + 1);
     fileName = "file" + (file + 1);
-    pieceFileName = "images/piece-set-" + /*PieceTheme*/ 3 + "/" + SIDE_CHARACTER[PIECE_COLOUR[piece]] + PIECE_CHARACTER[piece].toUpperCase() + ".png";
+    pieceFileName = "images/piece-set-" + piece_theme + "/" + SIDE_CHARACTER[PIECE_COLOUR[piece]] + PIECE_CHARACTER[piece].toUpperCase() + ".png";
     let pceImage = document.createElement("img");
     pceImage.src = pieceFileName;
     pceImage.className = "piece " + rankName + ' ' + fileName;
