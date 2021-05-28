@@ -286,7 +286,6 @@ function searchPosition() {
         if (currentDepth != 1) {
             line += (" Ordering:" + ((searchController.failHighFirst / searchController.failHigh) * 100).toFixed(2) + "%");
         }
-        console.log(line);
 
     }
 

@@ -88,19 +88,19 @@ class ChessGame {
             this.currentState = GAME_PLAYING;
             sounds.gameStartSound.play();
 
-
         })
 
         RESIGN_GAME_BTN.addEventListener('click', () => {
-            let winner = document.querySelector('#winner-text');
-            winner.innerText = this.chessBoard.side ? 'White wins by resignation' : 'Black wins by resignation';
+
+            GAME_OVER_HEADER.innerText = this.chessBoard.side ? 'White wins by resignation' : 'Black wins by resignation';
+            setGameoverAvatar();
+            checkResignWinner();
             this.currentState = GAME_OVER;
             sounds.gameoverSound.play();
         })
 
         PLAY_AGAIN_BTN.addEventListener('click', () => {
             window.vs_player = vs_player;
-
             newGame(START_FEN)
             this.currentState = GAME_PLAYING;
         })
@@ -109,15 +109,6 @@ class ChessGame {
             this.currentState = INITIAL;
         })
 
-        // remove this after
-        // SET_FEN.addEventListener('click', () => {
-        //     let fen = FEN.value || START_FEN;
-        //     this.chessBoard.parseFen(fen);
-        //     this.chessBoard.printBoard();
-        //     searchPosition();
-        //     newGame(fen);
-
-        // });
     }
 
     /**

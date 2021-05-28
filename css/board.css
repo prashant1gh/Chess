@@ -163,3 +163,66 @@
     height: 60px;
     width: 60px;
 }
+
+#board {
+    position: relative;
+    /* top: 20px; */
+    /* left: 60px; */
+    width: 480px;
+    height: 480px;
+    border: 1px solid black;
+}
+
+.info-wrapper {
+    padding: 10px;
+}
+
+.side-info-wrapper {
+    background-color: #272522;
+    height: 480px;
+    width: 100px;
+    margin-left: 10px;
+}
+
+.side-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+}
+
+.black-side {
+    background-image: url('../images/avatar-girl.png');
+    height: 100px;
+    width: 100px;
+}
+
+.white-side {
+    background-image: url('../images/you.png');
+    height: 100px;
+    width: 100px;
+}
+
+.resign-game-btn {
+    background-image: url('../images/resign-flag.png');
+    background-color: #33322f;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.resign-game-btn:hover {
+    background-color: #56544f;
+}
+
+.board-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wraps;
+}
+
+.side-active {
+    background-color: rgb(237, 238, 151);
+}

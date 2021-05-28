@@ -6,13 +6,14 @@ gameController = {
     gameover: null,
 }
 
-var audio = new Audio('audio/piece-move.wav');
 
 
 
 
 function newGame(fenStr, vs) {
     setTheme();
+    setAvatar()
+    clearPreviousWinner();
     chessBoard.parseFen(fenStr);
     setInitialBoardPieces();
     checkAndSet();
@@ -84,7 +85,6 @@ function clickedSquare(pageX, pageY) {
     let rank = 7 - Math.floor((pageY - workedY) / 60);
 
     let square = fileRankToSquare(file, rank)
-        // console.log('clicked square: ' + InputOutput.printSquare(square));
 
     selectSquare(square);
 
@@ -92,7 +92,6 @@ function clickedSquare(pageX, pageY) {
 }
 
 function clickPiece(event) {
-    console.log('Piece Click');
 
     if (userMove.from == SQUARES.NO_SQ) {
         userMove.from = clickedSquare(event.pageX, event.pageY);
@@ -105,7 +104,6 @@ function clickPiece(event) {
 
 
 function clickSquare(event) {
-    console.log('Square Click');
     if (userMove.from != SQUARES.NO_SQ) {
         userMove.to = clickedSquare(event.pageX, event.pageY);
         makeUserMove();
@@ -118,13 +116,12 @@ function clickSquare(event) {
 function makeUserMove() {
 
     if (userMove.from != SQUARES.NO_SQ && userMove.to != SQUARES.NO_SQ) {
-        console.log("usermove: " + printSquare(userMove.from) + printSquare(userMove.to))
 
         let parsed = parseMove(userMove.from, userMove.to);
 
         if (parsed != NO_MOVE) {
             makeMove(parsed);
-            chessBoard.printBoard();
+            // chessBoard.printBoard();
             moveGUIPiece(parsed);
             checkAndSet();
 
@@ -171,7 +168,7 @@ function addGUIPiece(square, piece) {
 
     rankName = "rank" + (rank + 1);
     fileName = "file" + (file + 1);
-    pieceFileName = "images/piece-set-" + /*PieceTheme*/ 1 + "/" + SIDE_CHARACTER[PIECE_COLOUR[piece]] + PIECE_CHARACTER[piece].toUpperCase() + ".png";
+    pieceFileName = "images/piece-set-" + /*PieceTheme*/ 3 + "/" + SIDE_CHARACTER[PIECE_COLOUR[piece]] + PIECE_CHARACTER[piece].toUpperCase() + ".png";
     let pceImage = document.createElement("img");
     pceImage.src = pieceFileName;
     pceImage.className = "piece " + rankName + ' ' + fileName;
@@ -205,7 +202,6 @@ function moveGUIPiece(move) {
         }
         removeGUIPiece(epRemove);
     } else if (captured(move)) {
-        console.log(to)
         removeGUIPiece(to);
     }
 
@@ -282,23 +278,25 @@ function ThreeFoldRep() {
 
 function checkResult() {
 
-    // checkSide();
+    checkSide();
 
     if (chessBoard.fiftyMove >= 100) {
-        printGameStatus("GAME DRAWN {fifty move rule}");
+        GAME_OVER_HEADER.innerText = 'Game draw -- fifty move rule';
+        chessGame.currentState = GAME_OVER;
 
         return BOOL.TRUE;
     }
 
     if (ThreeFoldRep() >= 2) {
-        $("#GameStatus").text();
-        printGameStatus("GAME DRAWN {3-fold repetition}");
+        GAME_OVER_HEADER.innerText = 'Game draw -- 3-fold repetition';
+        chessGame.currentState = GAME_OVER;
 
         return BOOL.TRUE;
     }
 
     if (DrawMaterial() == BOOL.TRUE) {
-        printGameStatus("GAME DRAWN {insufficient material to mate}");
+        GAME_OVER_HEADER.innerText = 'Game draw -- insufficient material to mate';
+        chessGame.currentState = GAME_OVER;
         return BOOL.TRUE;
     }
 
@@ -323,17 +321,23 @@ function checkResult() {
 
     if (InCheck == BOOL.TRUE) {
         if (chessBoard.side == COLOURS.WHITE) {
+            GAME_OVER_HEADER.innerText = 'Black wins by checkmate';
+            GAMEOVER_BLACK_AVATAR.classList.add('winner');
+            setGameoverAvatar()
             chessGame.currentState = GAME_OVER;
-            printGameStatus("GAME OVER {black mates}");
 
             return BOOL.TRUE;
         } else {
-            printGameStatus("GAME OVER {white mates}");
+            GAME_OVER_HEADER.innerText = 'White wins by checkmate';
+            GAMEOVER_WHITE_AVATAR.classList.add('winner');
+            setGameoverAvatar()
+            chessGame.currentState = GAME_OVER;
 
             return BOOL.TRUE;
         }
     } else {
-        printGameStatus("GAME DRAWN {stalemate}");
+        GAME_OVER_HEADER.innerText = 'Game draw -- stalemate';
+        chessGame.currentState = GAME_OVER;
         return BOOL.TRUE;
     }
 
@@ -342,12 +346,13 @@ function checkResult() {
 
 function checkSide() {
     if (chessBoard.side == COLOURS.WHITE) {
-        sideText = 'white';
+        BOARD_USER_WHITE_SIDE.classList.add('side-active');
+        BOARD_USER_BLACK_SIDE.classList.remove('side-active');
     } else if (chessBoard.side == COLOURS.BLACK) {
-        sideText = 'black';
+        BOARD_USER_BLACK_SIDE.classList.add('side-active');
+        BOARD_USER_WHITE_SIDE.classList.remove('side-active');
     }
 
-    return sideText
 }
 
 
@@ -357,14 +362,11 @@ function checkAndSet() {
         gameController.gameover = BOOL.TRUE;
     } else {
         gameController.gameover = BOOL.FALSE;
-        printGameStatus("game playing");
     }
 }
 
 function printGameStatus(text = "") {
     let gs = document.getElementById('gs');
-    let side2play = document.getElementById('side2play');
-    side2play.innerText = checkSide();
     gs.innerText = text;
 }
 
@@ -389,4 +391,56 @@ function startSearch(searchDepth) {
     makeMove(searchController.best);
     moveGUIPiece(searchController.best);
     checkAndSet();
+}
+
+
+function setAvatar() {
+    switch (vs_player) {
+        case ('human'):
+            BOARD_USER_BLACK_SIDE.style.backgroundImage = "url('images/you.png')"
+            break;
+        case ('weakAI'):
+            BOARD_USER_BLACK_SIDE.style.backgroundImage = "url('images/naive-ai.png')"
+            break;
+        case ('strongAI'):
+            BOARD_USER_BLACK_SIDE.style.backgroundImage = "url('images/ai.png')"
+            break;
+    }
+}
+
+function setGameoverAvatar() {
+    switch (vs_player) {
+        case ('human'):
+            GAMEOVER_BLACK_AVATAR.style.backgroundImage = "url('images/you.png')"
+            PLAYER2.innerText = 'Player 2'
+            break;
+        case ('weakAI'):
+            GAMEOVER_BLACK_AVATAR.style.backgroundImage = "url('images/naive-ai.png')"
+            PLAYER2.innerText = 'Naive AI'
+
+            break;
+        case ('strongAI'):
+            GAMEOVER_BLACK_AVATAR.style.backgroundImage = "url('images/ai.png')"
+            PLAYER2.innerText = 'Strong AI'
+
+            break;
+    }
+}
+
+function checkResignWinner() {
+    if (chessBoard.side == COLOURS.WHITE) {
+        GAMEOVER_BLACK_AVATAR.classList.add('winner');
+
+    } else {
+        GAMEOVER_WHITE_AVATAR.classList.add('winner');
+
+        return BOOL.TRUE;
+    }
+}
+
+function clearPreviousWinner() {
+    GAMEOVER_WHITE_AVATAR.classList.remove('winner');
+    GAMEOVER_BLACK_AVATAR.classList.remove('winner');
+
+
 }

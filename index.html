@@ -12,39 +12,7 @@
     <link rel="stylesheet" href="./css/menu.css">
     <link rel="stylesheet" href="./css/board.css">
     <link rel="stylesheet" href="./css/gameover.css">
-    <style>
-        #board {
-            position: relative;
-            /* top: 20px; */
-            /* left: 60px; */
-            width: 480px;
-            height: 480px;
-            border: 1px solid black;
-        }
-        /* HIDE RADIO */
-        
-        [type=radio] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        /* IMAGE STYLES */
-        
-        [type=radio]+img {
-            cursor: pointer;
-        }
-        /* CHECKED STYLES */
-        
-        [type=radio]:checked+img {
-            outline: 2px solid #f00;
-        }
-        
-        .game-info {
-            background-color: aquamarine;
-            left: 60px;
-        }
-    </style>
+
 </head>
 
 <body>
@@ -96,12 +64,24 @@
                     </div>
                 </div>
 
-
-
-
                 <h4 class="sub-heading">Choose Theme</h4>
+                <div class="flex-container">
+                    <div class="vs-players">
+                        <div class="flex-item-container">
+                            <label>
+                                <input type="radio" name="Vs-select" value="human" checked>
+
+                              </label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- <h4 class="sub-heading">Choose Theme</h4>
                 <select name="themeSelector" id="themeSelector">
-                </select>
+                </select> -->
 
 
                 <div class="btn-wrapper">
@@ -114,21 +94,27 @@
 
             <div class="gameScreen">
 
-                <div class="game-info">
-                    <p>side to play <span id="side2play"></span></p>
-                    <button id="resign_game">resign</button>
-                    <button>take a step back</button>
-                </div>
+
                 <!-- <div id="fen-in-div">
                     Fen: <br>
                     <input type="text" id="fen-in">
                     <button type="button" id="set-fen">set fen</button>
                 </div> -->
-                <div>
-                    <span id="gs"> </span>
-                </div>
-                <div id="board">
+                <div class="board-wrapper">
 
+                    <div id="board">
+                    </div>
+
+                    <div class="side-info-wrapper">
+                        <div class="side-info">
+                            <div class="black-side">
+                            </div>
+                            <span class="resign-game-btn" id="resign_game"></span>
+
+                            <div class="white-side side-active"></div>
+
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -142,22 +128,19 @@
 
                     <div class="game-over-user-component">
                         <div class="game-over-players">
-                            <div class="game-over-player-avatar-container winner">
-                                <img src="./images/you.png" alt="player1">
+                            <div id="gameover-white-avatar" class="game-over-player-avatar-container " style="background-image: url('images/you.png');">
 
-                                <div class="game-over-winner-crown">
-                                </div>
+
                             </div>
                             <div class="game-over-player-name">
                                 You
                             </div>
                         </div>
                         <div class="game-over-players">
-                            <div class="game-over-player-avatar-container">
-                                <img src="./images/avatar-girl.png" alt="player2">
+                            <div id="gameover-black-avatar" class="game-over-player-avatar-container" style="background-image: url('images/avatar-girl.png');">
                             </div>
-                            <div class="game-over-player-name">
-                                Nora
+                            <div id="player2" class="game-over-player-name">
+                                Player 2
                             </div>
                         </div>
                     </div>
