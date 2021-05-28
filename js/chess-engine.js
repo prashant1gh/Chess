@@ -104,8 +104,8 @@ class Engine {
             for (fileIter = FILES.FILE_A; fileIter <= FILES.FILE_H; fileIter++) {
                 fileName = "file" + (fileIter + 1);
 
-                if (light == 0) lightString = "light1";
-                else lightString = "dark1";
+                if (light == 0) lightString = "dark1";
+                else lightString = "light1";
                 let div = document.createElement("div");
                 divString = "square " + rankName + " " + fileName + " " + lightString;
                 div.className = divString;

@@ -2,8 +2,8 @@ class ChessGame {
 
     constructor() {
 
-        // this.currentState = INITIAL;
-        this.currentState = GAME_PLAYING;
+        this.currentState = INITIAL;
+        // this.currentState = GAME_PLAYING;
         // this.currentState = GAME_OVER;
     }
 
@@ -14,6 +14,7 @@ class ChessGame {
         this.engine = new Engine();
         this.chessBoard = new Chessboard();
         window.chessBoard = this.chessBoard;
+        window.vs_player = 'human';
 
     }
 
@@ -76,6 +77,13 @@ class ChessGame {
      */
     bindEvents() {
         PLAY_GAME_BTN.addEventListener('click', () => {
+
+
+            let vs_player = document.querySelector('input[name="Vs-select"]:checked').value
+            window.vs_player = vs_player;
+
+            newGame(START_FEN);
+
             this.currentState = GAME_PLAYING;
         })
 
@@ -92,14 +100,14 @@ class ChessGame {
         })
 
         // remove this after
-        SET_FEN.addEventListener('click', () => {
-            let fen = FEN.value || START_FEN;
-            this.chessBoard.parseFen(fen);
-            this.chessBoard.printBoard();
-            searchPosition();
-            newGame(fen);
+        // SET_FEN.addEventListener('click', () => {
+        //     let fen = FEN.value || START_FEN;
+        //     this.chessBoard.parseFen(fen);
+        //     this.chessBoard.printBoard();
+        //     searchPosition();
+        //     newGame(fen);
 
-        });
+        // });
     }
 
     /**

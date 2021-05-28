@@ -6,9 +6,9 @@ gameController = {
     gameover: null,
 }
 
-let mode = 2;
 
-function newGame(fenStr) {
+
+function newGame(fenStr, vs) {
     setTheme();
     chessBoard.parseFen(fenStr);
     setInitialBoardPieces();
@@ -37,14 +37,6 @@ function setInitialBoardPieces() {
 
         if (pce >= PIECES.wP && pce <= PIECES.bK) {
             addGUIPiece(sq120, pce)
-                // rankName = "rank" + (rank + 1);
-                // fileName = "file" + (file + 1);
-                // pieceFileName = "images/piece-set-" + PieceTheme + "/" + SIDE_CHARACTER[PIECE_COLOUR[pce]] + PIECE_CHARACTER[pce].toUpperCase() + ".png";
-                // let pceImage = document.createElement("img");
-                // pceImage.src = pieceFileName;
-                // pceImage.className = "piece " + rankName + ' ' + fileName;
-                // board.append(pceImage);
-                // pceImage.addEventListener('click', clickPiece);
         }
     }
 }
@@ -132,11 +124,15 @@ function makeUserMove() {
             chessBoard.printBoard();
             moveGUIPiece(parsed);
             checkAndSet();
-            switch (mode) {
-                case (1):
-                    preSearch();
+
+            switch (vs_player) {
+                case ('human'):
                     break;
-                case (2):
+                case ('weakAI'):
+                    preSearch(2);
+                    break;
+                case ('strongAI'):
+                    preSearch(5);
                     break;
             }
         }
@@ -213,18 +209,11 @@ function moveGUIPiece(move) {
     let rankName = "rank" + (rank + 1);
     let fileName = "file" + (file + 1);
 
-    // $('.Piece').each(function(index) {
-    //     if (PieceIsOnSq(from, $(this).position().top, $(this).position().left) == BOOL.TRUE) {
-    //         $(this).removeClass();
-    //         $(this).addClass("Piece " + rankName + " " + fileName);
-    //     }
-    // });
 
     pieces = document.querySelectorAll('.piece');
 
     pieces.forEach(function(value) {
         if (value.id == 'pceImage' + from) {
-            // value.removeClass(value);
             value.className = "piece " + rankName + " " + fileName;
             value.id = 'pceImage' + to;
 
@@ -325,6 +314,7 @@ function checkResult() {
 
     if (InCheck == BOOL.TRUE) {
         if (chessBoard.side == COLOURS.WHITE) {
+
             printGameStatus("GAME OVER {black mates}");
 
             return BOOL.TRUE;
@@ -341,6 +331,8 @@ function checkResult() {
     return BOOL.FALSE;
 }
 
+
+
 function checkAndSet() {
     if (checkResult() == BOOL.TRUE) {
         gameController.gameover = BOOL.TRUE;
@@ -355,17 +347,18 @@ function printGameStatus(text) {
     gs.innerText = text;
 }
 
-function preSearch() {
+function preSearch(searchDepth) {
     if (gameController.gameover == BOOL.FALSE) {
         searchController.thinking = BOOL.TRUE;
-        setTimeout(function() { startSearch(); }, 200);
+        setTimeout(function() { startSearch(searchDepth); }, 200);
     }
 }
 
 
-function startSearch() {
+function startSearch(searchDepth) {
 
-    searchController.depth = MAX_DEPTH;
+    // searchController.depth = MAX_DEPTH;
+    searchController.depth = searchDepth;
     var t = Date.now();
     var tt = 1;
 
