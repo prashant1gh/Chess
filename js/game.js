@@ -90,7 +90,7 @@ class ChessGame {
 
         RESIGN_GAME_BTN.addEventListener('click', () => {
 
-            GAME_OVER_HEADER.innerText = this.chessBoard.side ? 'White wins by resignation' : 'Black wins by resignation';
+            GAME_OVER_HEADER.innerText = this.chessBoard.side ? 'White won by resignation' : 'Black won by resignation';
             setGameoverAvatar();
             checkResignWinner();
             this.currentState = GAME_OVER;

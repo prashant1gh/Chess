@@ -301,14 +301,14 @@ function checkResult() {
 
     if (InCheck == BOOL.TRUE) {
         if (chessBoard.side == COLOURS.WHITE) {
-            GAME_OVER_HEADER.innerText = 'Black wins by checkmate';
+            GAME_OVER_HEADER.innerText = 'Black won by checkmate';
             GAMEOVER_BLACK_AVATAR.classList.add('winner');
             setGameoverAvatar()
             chessGame.currentState = GAME_OVER;
 
             return BOOL.TRUE;
         } else {
-            GAME_OVER_HEADER.innerText = 'White wins by checkmate';
+            GAME_OVER_HEADER.innerText = 'White won by checkmate';
             GAMEOVER_WHITE_AVATAR.classList.add('winner');
             setGameoverAvatar()
             chessGame.currentState = GAME_OVER;
